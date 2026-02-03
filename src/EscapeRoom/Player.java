@@ -10,6 +10,7 @@ package EscapeRoom;
 public class Player {
     // Private property to store the play's name.
     public String name;
+    public int age;
 
     /**
      * Constructs a Player with the specified name.
