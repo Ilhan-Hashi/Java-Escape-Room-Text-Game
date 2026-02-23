@@ -1,4 +1,4 @@
-package EscapeRoom;
+package EscapeRoom.puzzles;
 
 /**
  * The Puzzle class is an abstract class for all puzzle types

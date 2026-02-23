@@ -1,4 +1,4 @@
-package EscapeRoom;
+package EscapeRoom.player;
 
 /**
  * The Player class represents a player in the game.
@@ -9,7 +9,7 @@ package EscapeRoom;
  */
 public class Player {
     // Private property to store the play's name.
-    public String name;
+    private String name;
 
     /**
      * Constructs a Player with the specified name.

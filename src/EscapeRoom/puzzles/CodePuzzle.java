@@ -1,4 +1,4 @@
-package EscapeRoom;
+package EscapeRoom.puzzles;
 
 /**
  * A puzzle that is solved by entering the correct code.
