@@ -9,28 +9,56 @@ import EscapeRoom.world.Room;
  * @author Ilhan Hashi
  */
 public class Player {
-    // Private fields.
-    private String name;
+    // Unique database ID for the player.
+    private int id;
+
+    // Username chosen by the player
+    private String userName;
+
+    // Current location in the game.
     private Room currentRoom;
+
+    // Player's inventory.
     private Inventory inventory;
 
     /**
-     * Creates a player with a name and starting room.
-     * @param name The player's name.
-     * @param startingRoom The room where the player begins.
+     * Constructor used when loading player from database.
+     * @param id the unique database ID
+     * @param userName the player's username
      */
-    public Player(String name, Room startingRoom) {
-        this.name = name;
+    public Player(int id, String userName) {
+        this.id = id;
+        this.userName = userName;
+        this.inventory = new Inventory();
+    }
+
+    /**
+     * Constructor used when starting a new game.
+     * @param id the unique database ID
+     * @param userName the player's username
+     * @param startingRoom the room where the player begins
+     */
+    public Player(int id, String userName, Room startingRoom) {
+        this.id = id;
+        this.userName = userName;
         this.currentRoom = startingRoom;
         this.inventory = new Inventory();
     }
 
     /**
-     * Returns the player's name.
-     * @return the name of the player.
+     * Returns the player's unique database ID.
+     * @return the player's ID.
      */
-    public String getName() {
-        return name;
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Returns the player's username.
+     * @return the player's username.
+     */
+    public String getUserName() {
+        return userName;
     }
 
     /**

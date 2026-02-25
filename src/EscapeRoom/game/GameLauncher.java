@@ -1,5 +1,7 @@
 package EscapeRoom.game;
 
+import EscapeRoom.database.DatabaseManager;
+import EscapeRoom.database.PlayerDatabase;
 import EscapeRoom.player.Player;
 import EscapeRoom.puzzles.CodePuzzle;
 import EscapeRoom.world.Direction;
@@ -7,6 +9,8 @@ import EscapeRoom.world.Exit;
 import EscapeRoom.world.Room;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.Scanner;
 
 public class GameLauncher {
     // Insantiate logging object.
@@ -24,68 +28,38 @@ public class GameLauncher {
 //
 //        // For debugging to confirm main() is running.
 //        log.debug("Main method entered");
+        try {
+            // DATABASE SETUP
+            DatabaseManager.getInstance();
+            PlayerDatabase.createPlayerTable();
 
-        // Create a room.
-        Room roomA = new Room("Room A",
-                "You are a dimly liy escape room. the air feels heavy.");
+            Scanner scanner = new Scanner(System.in);
 
-        // Create Room B (final room)
-        Room roomB = new Room("Room B",
-                "You step into a bright hallway. Freedom is near.");
+            System.out.println("Welcome to the Escape Room!");
+            System.out.print("Enter your username: ");
 
-        // Create a puzzle required to unlock the nor exit.
-        CodePuzzle doorPuzzle = new CodePuzzle("Door Code" ,
-                "A keypad besides the reads: Enter 4-Digit code",
-                "1234"
-        );
+            String username = scanner.nextLine().trim().toLowerCase();
 
-        // Add puzzle to Room A
-        roomA.addPuzzle(doorPuzzle);
+            Player player;
 
-        // Set wall descriptions for Room A
-        roomA.setWallDescription(Direction.NORTH,
-                "A large metal door stands here with a keypad.");
+            if (!PlayerDatabase.usernameExists(username)) {
 
-        roomA.setWallDescription(Direction.SOUTH,
-                "A wooden chest sits against the wall.");
+                int id = PlayerDatabase.insertPlayer(username);
+                player = new Player(id, username);
 
-        roomA.setWallDescription(Direction.EAST,
-                "A cracked mirror hangs loosely.");
+                System.out.println("Welcome, " + player.getUserName().toUpperCase() + "!");
 
-        roomA.setWallDescription(Direction.WEST,
-                "An old bookshelf with dusty books.");
+            } else {
 
-        // Create a locked exit requiring the puzzle
-        Exit northExit = new Exit(roomB, doorPuzzle);
+                player = PlayerDatabase.getPlayer(username);
 
-        // Mark this exit as the final exit
-        northExit.setFinalExit(true);
+                System.out.println("Welcome back, " + player.getUserName().toUpperCase() + "!");
+            }
+            scanner.close();
 
-        // Attach exit to Room A
-        roomA.setExit(Direction.NORTH, northExit);
-
-        // Create player starting in Room A
-        Player player = new Player("Ilhan", roomA);
-
-        // Create GameManager
-        GameManager gameManager = new GameManager(player);
-
-        // Start game
-        gameManager.startGame();
-
-        // Test exploration
-        gameManager.exploreDirection(Direction.SOUTH);
-        gameManager.exploreDirection(Direction.NORTH);
-
-        // Solve puzzle manually for testing
-        doorPuzzle.attempt("1234");
-
-        // Try again
-        gameManager.exploreDirection(Direction.NORTH);
-
-        // Check state
-        if (gameManager.getGameState() == GameState.WON) {
-            System.out.println("Game state is WON.");
+        } catch (Exception e) {
+            System.out.println("An unexpected error occurred.");
+            e.printStackTrace();
         }
     }
 }

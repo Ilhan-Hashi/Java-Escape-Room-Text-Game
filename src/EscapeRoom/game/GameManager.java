@@ -98,7 +98,7 @@ public class GameManager {
 
         if (exit.isFinalExit()) {
             gameState = GameState.WON;
-            System.out.println("Congrats " + player.getName() + "! You have escaped! You win!");
+//            System.out.println("Congrats " + player.getName() + "! You have escaped! You win!");
         }
     }
 
