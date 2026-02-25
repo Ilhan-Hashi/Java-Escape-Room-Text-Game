@@ -1,46 +1,53 @@
 package EscapeRoom.puzzles;
 
 /**
- * A puzzle that is solved by entering the correct code.
- * Extends the Puzzle class.
+ * CodePuzzle represents a puzzle that requires
+ * the player to enter a correct code.
  *
  * @author Ilhan Hashi
- * @course Java Part 2
  */
 public class CodePuzzle extends Puzzle {
-    // Private field that stores the correct code needed to solve the puzzle.
-    private String validCode;
+    // Private property.
+    private String solutionCode;
 
     /**
-     * Constructs a CodePuzzle with a description and a valid code.
-     * @param description the puzzle description.
-     * @param validCode the correct code needed to solve the puzzle.
+     * Creates a new CodePuzzle with a name, description, and a
+     * solution code.
+     *
+     * @param name The name of the puzzle.
+     * @param description The description shown to the player.
+     * @param solutionCode The correct code required to solve the puzzle.
      */
-    public CodePuzzle(String description, String validCode) {
-        this.description = description;
-        this.validCode = validCode;
-        this.solved = false;
+    public CodePuzzle(String name, String description, String solutionCode) {
+        super(name, description);
+        this.solutionCode = solutionCode;
     }
 
     /**
-     * Checks whether the provided input matches the valid code.
-     * If the code is correct, the puzzle is marked as solved.
-     * @param input the code entered by the player.
-     * @return true if the input matches the valid code, false otherwise.
+     * Attempts to solve the puzzle by comparing the player's answer
+     * to the correct solution code.
+     *
+     * @param answer The player's input.
+     * @return true if the answer is correct, false otherwise.
      */
-    public boolean checkCode(String input) {
-        // Flag to track correctness.
-        boolean isValid = false;
+    @Override
+    public boolean attempt(String answer) {
+        // Flag to track if the code is correct.
+        boolean correct = false;
 
-        // Check if the input matches the valid code.
-        if(input.equals(validCode)) {
-            // Mark puzzle as solved.
-            solved = true;
-
-            // Update the flag.
-            isValid = true;
+        // Check if the puzzle is already solved.
+        if (isSolved()) {
+            correct = true;
         }
-        // Returns whether the code was valid or not.
-        return isValid;
+        else {
+            // Compare the player's input to the solution code.
+            if (solutionCode.equals(answer)) {
+                setSolved(true);
+                correct = true;
+            }
+        }
+
+        // Return the result.
+        return correct;
     }
 }

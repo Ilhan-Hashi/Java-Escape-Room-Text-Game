@@ -1,33 +1,22 @@
 package EscapeRoom.items;
+
+import EscapeRoom.player.Player;
+
 /**
- * The Usable interface represents an item
- * that can be used and examined in the game.
- *
- * Example: Class interface with at least four methods.
+ * The Usable interface represents behavior
+ * for items that can be used by the player.
  *
  * @author Ilhan Hashi
- * @course Java Part 2
  */
 public interface Usable {
     /**
-     * Performs the action of the using item.
+     * Defines what happens when the item is used.
+     * @param player the player using the item.
      */
-    public void use();
+    void use(Player player);
 
     /**
-     * Displays information about the item.
+     * Displays additional info about the item.
      */
-    public void examine();
-
-    /**
-     * Returns the name of the item.
-     * @return the item's name.
-     */
-    public String getName();
-
-    /**
-     * Determines whether the item has been used.
-     * @return true or false whether if the item has been used.
-     */
-    public boolean isUsed();
+    void examine();
 }

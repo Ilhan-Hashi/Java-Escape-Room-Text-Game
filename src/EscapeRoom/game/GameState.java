@@ -1,14 +1,27 @@
 package EscapeRoom.game;
 /**
- * Represents the possible states of the game.
- * Used by GameManager to track game progress.
+ * The GameState enum represents the current state of the game.
  *
  * @author Ilhan Hashi
- * @course Java Part 2
  */
 public enum GameState {
+    /**
+     * The game has not started yet.
+     */
     NOT_STARTED,
+
+    /**
+     * The game is currently running.
+     */
     STARTED,
+
+    /**
+     * The player has successfully escaped.
+     */
     WON,
+
+    /**
+     * The player has quit or lost the game.
+     */
     LOST
 }

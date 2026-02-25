@@ -1,41 +1,66 @@
 package EscapeRoom.puzzles;
 
 /**
- * The Puzzle class is an abstract class for all puzzle types
- * in the game. It stores shared puzzles data such as description and
- * solved state.
+ * The Puzzle class represents a challenge
+ * that the player must solve.
  *
- *  * @author Ilhan Hashi
- *  * @course Java Part 2
+ * @author
  */
 public abstract class Puzzle {
-    // Protected properties that describes the puzzle
-    // tracks whether the puzzle has been solved.
-    protected String description;
-    protected boolean solved;
+    // Private properties.
+    private String name;
+    private String description;
+    private boolean solved;
 
     /**
-     * Default constructor.
-     * Initializes a puzzle in an unsolved state.
+     * Creates a puzzle with a name and description.
+     *
+     * @param name The name of the puzzle.
+     * @param description A description of the puzzle.
      */
-    public Puzzle() {
+    public Puzzle(String name, String description) {
+        this.name = name;
+        this.description = description;
         this.solved = false;
-    };
+    }
 
     /**
-     * Returns the puzzle description.
+     * Attempts to solve the puzzle using the given answer.
+     * @param answer the player's answer to the puzzle
+     * @return true if the answer is correct, false otherwise.
+     */
+    public abstract boolean attempt (String answer);
+
+    /**
+     * Returns whether the puzzle has been solved.
+     *
+     * @return true if solved, and false if not.
+     */
+    public boolean isSolved() {
+        return solved;
+    }
+
+    /**
+     * Sets the puzzle as solved.
+     * @param solved solved true if the puzzle is solved, false otherwise.
+     */
+    protected void setSolved(boolean solved) {
+        this.solved = solved;
+    }
+
+    /**
+     * Returns the description of the puzzle.
      * @return the puzzle description.
      */
     public String getDescription() {
         return description;
     }
 
-
     /**
-     * Returns whether the puzzle has been solved.
-     * @return true if the puzzle is solved, false otherwise.
+     * Returns the name of the puzzle.
+     * @return the puzzle name.
      */
-    public boolean isSolved() {
-        return solved;
+    public String getName() {
+        return name;
     }
 }
