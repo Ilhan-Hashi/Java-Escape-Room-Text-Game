@@ -1,52 +1,61 @@
 package EscapeRoom.items;
 
 /**
- * The item class reprsents a basic object that can
- * exist in a room or in the player's inventory.
+ * The Item class represents an object in the game.
  *
- * @author  Ilhan Hashi
+ * @author Ilhan Hashi
  */
 public class Item {
-    // Properties.
+
+    //region Fields
     private String name;
     private String description;
+    private boolean takeable;
+    //endregion
+
+    //region Constructor
 
     /**
-     * Creates a new item with a name and description.
-     *
-     * @param name The name of the item.
-     * @param description A short description of the item.
+     * Creates an item.
      */
-    public Item(String name, String description) {
+    public Item(String name, String description, boolean takeable) {
         this.name = name;
         this.description = description;
+        this.takeable = takeable;
     }
+    //endregion
+
+    //region Getters
 
     /**
-     *
-     * Returns the name of the item.
-     *
-     * @return item name
+     * Returns the item name.
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Returns the description of the item.
-     *
-     * @return item description
+     * Returns the item description.
      */
     public String getDescription() {
         return description;
     }
 
     /**
-     * Returns the string representation of the item.
-     * @return the name of the item.
+     * Returns whether the item can be taken.
      */
-    @Override
-    public String toString() {
-        return name;
+    public boolean isTakeable() {
+        return takeable;
     }
+    //endregion
+
+    //region Behavior
+
+    /**
+     * Prints the item description.
+     */
+    public void examine() {
+        System.out.println(description);
+    }
+    //endregion
 }

@@ -1,65 +1,91 @@
 package EscapeRoom.game;
-
 import EscapeRoom.database.DatabaseManager;
 import EscapeRoom.database.PlayerDatabase;
 import EscapeRoom.player.Player;
-import EscapeRoom.puzzles.CodePuzzle;
-import EscapeRoom.world.Direction;
-import EscapeRoom.world.Exit;
 import EscapeRoom.world.Room;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
+/**
+ The GameLauncher class starts the Escape Room game.
+ * It initializes the database, loads the player,
+ * and begins the story.
+ *
+ * @author Ilhan Hashi
+ */
 public class GameLauncher {
-    // Insantiate logging object.
+    // Logger for recording game events
     final static Logger log = LogManager.getLogger("GameLogger");
 
     public static void main(String[] args) {
-//        //System.out.println("Starting Game...");
-//
-//        // Print a message.
-//        String message = "Starting Game...";
-//        System.out.println(message);
-//
-//        // Records when the game starts.
-//        log.info("Game started");
-//
-//        // For debugging to confirm main() is running.
-//        log.debug("Main method entered");
         try {
-            // DATABASE SETUP
-            DatabaseManager.getInstance();
-            PlayerDatabase.createPlayerTable();
+            // Initialize database and player table
+            initializeDatabase();
 
             Scanner scanner = new Scanner(System.in);
 
-            System.out.println("Welcome to the Escape Room!");
-            System.out.print("Enter your username: ");
+            // Print game banner
+            StoryPrinter.printGameBanner();
 
+            // Ask player for username
+            System.out.print("Enter your username: ");
             String username = scanner.nextLine().trim().toLowerCase();
 
-            Player player;
+            // Load or create player
+            Player player = loadPlayer(username);
 
-            if (!PlayerDatabase.usernameExists(username)) {
-
-                int id = PlayerDatabase.insertPlayer(username);
-                player = new Player(id, username);
-
-                System.out.println("Welcome, " + player.getUserName().toUpperCase() + "!");
-
-            } else {
-
-                player = PlayerDatabase.getPlayer(username);
-
-                System.out.println("Welcome back, " + player.getUserName().toUpperCase() + "!");
-            }
-            scanner.close();
+            // Print intro story
+            StoryPrinter.printIntro();
 
         } catch (Exception e) {
+
             System.out.println("An unexpected error occurred.");
             e.printStackTrace();
+
+            log.error("Game crashed", e);
         }
+    }
+
+    /**
+     * Initializes the database connection
+     * and ensures the player table exists.
+     */
+    private static void initializeDatabase() {
+
+        DatabaseManager.getInstance();
+        PlayerDatabase.createPlayerTable();
+
+        log.info("Database initialized.");
+    }
+
+    /**
+     * Loads an existing player or creates a new one.
+     *
+     * @param username the username entered by the player
+     * @return the Player object
+     */
+    private static Player loadPlayer(String username) {
+
+        Player player;
+
+        if (!PlayerDatabase.usernameExists(username)) {
+
+            int id = PlayerDatabase.insertPlayer(username);
+            player = new Player(id, username);
+
+            StoryPrinter.printNewPlayerWelcome();
+            log.info("New player created: " + username);
+
+        } else {
+
+            player = PlayerDatabase.getPlayer(username);
+
+            StoryPrinter.printReturningPlayerWelcome(player.getUserName());
+            log.info("Returning player logged in: " + username);
+        }
+
+        return player;
     }
 }

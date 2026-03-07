@@ -2,30 +2,38 @@ package EscapeRoom.items;
 
 import EscapeRoom.player.Player;
 
-public class Key extends Item implements Usable{
-    /**
-     * reates a Key with a name and description.
-     * @param name the name of the key.
-     * @param description the description of the key.
-     */
-    public Key(String name, String description) {
-        super(name, description);
-    }
+/**
+ * The Key class represents a key item in the game.
+ *
+ * @author Ilhan Hashi
+ */
+public class Key extends Item implements Usable {
+
+    //region Fields
+    private String unlocks;
+    //endregion
+
+    //region Constructor
 
     /**
-     * Displays the clue when used.
-     * @param player the player using the item.
+     * Creates a key.
+     */
+    public Key(String name, String description, String unlocks) {
+        super(name, description, true);
+        this.unlocks = unlocks;
+    }
+
+    //endregion
+
+    //region Behavior
+
+    /**
+     * Uses the key.
      */
     @Override
-    public void use(Player player){
+    public void use(Player player) {
         System.out.println("You try using the " + getName() + ".");
     }
 
-    /**
-     * Displays detailed info about the note.
-     */
-    @Override
-    public void examine(){
-        System.out.println(getDescription());
-    }
+    //endregion
 }

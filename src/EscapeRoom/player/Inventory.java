@@ -6,57 +6,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The Inventory class stores and manages items
- * collected by the player.
+ * Stores and manages the player's items.
  *
  * @author Ilhan Hashi
  */
 public class Inventory {
-    // Private property.
-    private List<Item> items;
+    private List<Item> items = new ArrayList<>();
+
+    //region Item Management
 
     /**
-     * Constructor that creates an empty inventory.
-     */
-    public Inventory() {
-        this.items = new ArrayList<>();
-    }
-
-    /**
-     * Adds an item to the inventory,
-     * @param item the item to add.
+     * Adds an item to the inventory.
      */
     public void addItem(Item item) {
-        this.items.add(item);
+        items.add(item);
     }
 
     /**
      * Removes an item from the inventory.
-     * @param item the item to remove.
      */
     public void removeItem(Item item) {
-        this.items.remove(item);
+        items.remove(item);
     }
 
     /**
-     * Finds an item by name.
-     * @param name the name of the item to search for.
-     * @return the matching item or null if not found.
+     * Returns an item by name.
      */
-    public Item getItemByName(String name) {
-        // Check if name is null.
-        if (name == null) {
-            return null;
-        }
+    public Item getItem(String itemName) {
 
-        // Loop through the item list.
         for (Item item : items) {
-
-            // Check if item and item name are not null.
-            if (item != null && item.getName() != null) {
-                if (item.getName().equalsIgnoreCase(name)) {
-                    return item;
-                }
+            if (item.getName().equalsIgnoreCase(itemName)) {
+                return item;
             }
         }
 
@@ -64,10 +44,40 @@ public class Inventory {
     }
 
     /**
-     * Returns all items in the inventory.
-     * @return the list of items.
+     * Checks if the inventory has an item.
+     */
+    public boolean hasItem(String itemName) {
+        return getItem(itemName) != null;
+    }
+
+    /**
+     * Returns all inventory items.
      */
     public List<Item> getItems() {
         return items;
     }
+
+    //endregion
+
+    //region Display
+
+    /**
+     * Prints the inventory items.
+     */
+    public void showInventory() {
+
+        if (items.isEmpty()) {
+            System.out.println("Your inventory is empty.");
+            return;
+        }
+
+        System.out.println("Inventory:");
+
+        for (Item item : items) {
+            System.out.println("- " + item.getName());
+        }
+
+    }
+
+    //endregion
 }
