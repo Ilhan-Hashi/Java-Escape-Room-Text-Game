@@ -3,35 +3,54 @@ package EscapeRoom.items;
 import EscapeRoom.player.Player;
 
 /**
- * Tool represents an item that can be used
- * to interact with objects in a room.
+ * The Tool class represents a usable tool in the game.
  *
  * @author Ilhan Hashi
  */
-public class Tool extends Item implements Usable{
+public class Tool extends Item implements Usable {
+
+    //region Fields
+    private boolean active;
+    //endregion
+
+    //region Constructor
+
     /**
-     * Creates a Tool with a name and description.
-     * @param name the name of the tool.
-     * @param description the description of the tool.
+     * Creates a tool.
      */
     public Tool(String name, String description) {
-        super(name, description);
+        super(name, description, true);
+        this.active = false;
     }
 
-    /**
-     * Displays the clue when used.
-     * @param player the player using the item.
-     */
-    @Override
-    public void use(Player player){
-        System.out.println("You use the " + getName() + " to interact with the room.");
-    }
+    //endregion
+
+    //region Getters
 
     /**
-     * Displays detailed info about the note.
+     * Returns whether the tool is active.
+     */
+    public boolean isActive() {
+        return active;
+    }
+
+    //endregion
+
+    //region Behavior
+
+    /**
+     * Uses the tool.
      */
     @Override
-    public void examine(){
-        System.out.println(getDescription());
+    public void use(Player player) {
+        active = !active;
+
+        if (active) {
+            System.out.println("You turn on the " + getName() + ".");
+        } else {
+            System.out.println("You turn off the " + getName() + ".");
+        }
     }
+
+    //endregion
 }

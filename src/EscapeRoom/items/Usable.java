@@ -14,9 +14,4 @@ public interface Usable {
      * @param player the player using the item.
      */
     void use(Player player);
-
-    /**
-     * Displays additional info about the item.
-     */
-    void examine();
 }
