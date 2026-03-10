@@ -7,8 +7,9 @@ package EscapeRoom.enums;
  * @author Ilhan Hashi
  */
 public enum Direction {
-    /**
-     * Possible directions the player can move.
-     */
-    NORTH, EAST, SOUTH, WEST, CENTER;
+    NORTH,
+    EAST,
+    SOUTH,
+    WEST,
+    CENTER;
 }
