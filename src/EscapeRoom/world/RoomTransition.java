@@ -10,7 +10,7 @@ import EscapeRoom.enums.Location;
 public interface RoomTransition {
     /**
      * When the player transitions to a new room.
-     * @param location the room the player entered.
+     * @param destination the room the player entered.
      */
-    void transition(Location location);
+    void transition(Location destination);
 }
