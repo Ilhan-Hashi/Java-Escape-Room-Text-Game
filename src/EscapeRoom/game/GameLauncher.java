@@ -27,7 +27,7 @@ public class GameLauncher {
             Scanner scanner = new Scanner(System.in);
 
             // Print game banner
-            StoryPrinter.printGameBanner();
+            //StoryPrinter.printGameBanner();
 
             // Ask player for username
             System.out.print("Enter your username: ");
@@ -37,7 +37,7 @@ public class GameLauncher {
             Player player = loadPlayer(username);
 
             // Print intro story
-            StoryPrinter.printIntro();
+            StoryPrinter.printStoryBlock("mainRoom.examineRoom.start");
 
         } catch (Exception e) {
 
@@ -75,14 +75,14 @@ public class GameLauncher {
             int id = PlayerDatabase.insertPlayer(username);
             player = new Player(id, username);
 
-            StoryPrinter.printNewPlayerWelcome();
+           // StoryPrinter.printNewPlayerWelcome();
             log.info("New player created: " + username);
 
         } else {
 
             player = PlayerDatabase.getPlayer(username);
 
-            StoryPrinter.printReturningPlayerWelcome(player.getUserName());
+           // StoryPrinter.printReturningPlayerWelcome(player.getUserName());
             log.info("Returning player logged in: " + username);
         }
 
