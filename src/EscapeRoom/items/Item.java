@@ -6,5 +6,32 @@ package EscapeRoom.items;
  * @author Ilhan Hashi
  */
 public class Item {
+    //region Fields
 
+    // Properties.
+    private String name;
+    private String description;
+
+    //endregion
+
+    //region Constructor
+
+    /**
+     * Creates a new item.
+     * @param name the name of the item.
+     * @param description the description of the item.
+     */
+    private Item(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    //endregion
+
+    // region Getters
+
+    public String getName() {return name;}
+    public String getDescription() {return description;}
+
+    //endregion
 }
