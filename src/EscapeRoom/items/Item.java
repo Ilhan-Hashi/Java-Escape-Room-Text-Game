@@ -9,8 +9,8 @@ public class Item {
     //region Fields
 
     // Properties.
-    private String name;
-    private String description;
+    private final String name;
+    private final String description;
 
     //endregion
 
@@ -25,6 +25,14 @@ public class Item {
         this.name = name;
         this.description = description;
     }
+
+    /**
+     * Creates an item with a name and a default description.
+     */
+    public Item(String name) {
+        this(name, "No Description");
+    }
+
 
     //endregion
 

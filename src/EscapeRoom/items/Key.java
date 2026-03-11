@@ -10,7 +10,7 @@ import EscapeRoom.player.Player;
 public class Key extends Item {
     //region Fields
 
-    private String unlocks;
+    private final String unlocks;
 
     //endregion
 

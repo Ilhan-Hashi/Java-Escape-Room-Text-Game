@@ -13,7 +13,7 @@ public class Player {
 
     // Unique database ID for the player.
     private int id;
-    private String userName;
+    private final String userName;
     private Inventory inventory;
 
     //endregion
@@ -49,6 +49,18 @@ public class Player {
      */
     public Inventory getInventory() {
         return inventory;
+    }
+
+    //endregion
+
+    //region Helper Methods
+
+    /**
+     * Returns a simple string showing the player's id and username.
+     */
+    @Override
+    public String toString() {
+        return "Player{id=" + id + ", userName='" + userName + "'}";
     }
 
     //endregion

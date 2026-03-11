@@ -102,13 +102,13 @@ public class GameLauncher {
             player = new Player(id, username);
 
              StoryPrinter.printNewPlayerWelcome();
-            log.info("New player created: " + username);
+            log.info("New player created: " + player);
 
         } else {
             player = PlayerDatabase.getPlayer(username);
 
              StoryPrinter.printReturningPlayerWelcome(player.getUserName());
-            log.info("Returning player logged in: " + username);
+            log.info("Returning player logged in: " + player);
         }
 
         return player;
