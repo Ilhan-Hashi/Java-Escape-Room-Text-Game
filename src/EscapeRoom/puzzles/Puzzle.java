@@ -19,9 +19,8 @@ public abstract class Puzzle {
     /**
      * Creates a new puzzle/
      * @param name the name of the puzzle.
-     * @param solved whether the puzzle is already solved.
      */
-    public Puzzle(String name, boolean solved) {
+    public Puzzle(String name) {
         this.name = name;
         this.solved = solved;
     }
