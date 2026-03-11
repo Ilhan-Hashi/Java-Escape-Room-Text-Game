@@ -4,8 +4,8 @@ import EscapeRoom.enums.Location;
 import EscapeRoom.world.rooms.*;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Manages all of the rooms in the game.
@@ -25,7 +25,7 @@ public class RoomBuilder {
      * Creates the game room and initializes the rooms.
      */
     public RoomBuilder() {
-        rooms = new HashMap<>();
+        rooms = new TreeMap<>();
         buildRooms();
     }
 
