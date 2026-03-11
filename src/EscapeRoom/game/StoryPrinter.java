@@ -11,9 +11,13 @@ import java.util.ResourceBundle;
  */
 public class StoryPrinter {
 
+    //region Field
+
     // Load story resource bundle
     private static final ResourceBundle story =
             ResourceBundle.getBundle("story", Locale.getDefault());
+
+    //endregion
 
     //region Banner
 
@@ -31,6 +35,27 @@ public class StoryPrinter {
         System.out.println("+---------------------------------+");
         System.out.println();
 
+    }
+
+    //endregion
+
+    //region Player
+
+    /**
+     * Prints tje welcome message for a new player.
+     */
+    public static void printNewPlayerWelcome() {
+        printStoryBlock("welcome.new");
+    }
+
+    /**
+     * Prints the welcome message for a returning player.
+     */
+    public static void printReturningPlayerWelcome(String username) {
+        System.out.println(MessageFormat.format(story.getString("welcome.return.1"), username));
+        System.out.println(story.getString("welcome.return.2"));
+        System.out.println(story.getString("welcome.return.3"));
+        System.out.println();
     }
 
     //endregion
