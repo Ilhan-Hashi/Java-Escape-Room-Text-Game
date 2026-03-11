@@ -42,6 +42,7 @@ public class GameManager {
      * @param player the player playing the game.
      */
     public GameManager(Player player) {
+        assert player != null: "player cannot be null";
         this.player = player;
         this.gameState = GameState.STARTED;
         setupRoomTransitions();
