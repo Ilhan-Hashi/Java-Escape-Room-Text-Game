@@ -32,7 +32,7 @@ public class GameManager {
     private GameState gameState;
     private Location location = Location.MAIN_CENTER;
     private final RoomBuilder roomBuilder = new RoomBuilder();
-    private Location previousLocation = Location.MAIN_CENTER;
+    private Location previousLocation = null;
     private final LocalDateTime startTime = LocalDateTime.now();
 
     //endregion
@@ -74,16 +74,20 @@ public class GameManager {
      * @param direction the direction the player want to go.
      */
     public void goDirection(Direction direction) {
-        Room currentRoom = getCurrentRoom();
-        Room previousRoom = roomBuilder.getRoom(previousLocation);
+        if (isAlreadyAtLocation(direction)) {
+            System.out.println("You are already standing there.");
+            return;
+        }
 
-        if (currentRoom.equals(previousRoom) || isAlreadyAtLocation(direction)) {
+        Room currentRoom = getCurrentRoom();
+        Room previousRoom = previousLocation != null ? roomBuilder.getRoom(previousLocation) : null;
+
+        if (previousRoom != null && currentRoom.equals(previousRoom)) {
             System.out.println("You are already standing there.");
             return;
         }
 
         previousLocation = location;
-
         switch (direction) {
             case NORTH:
                 location = Location.MAIN_NORTH;
@@ -91,7 +95,11 @@ public class GameManager {
                 break;
             case SOUTH:
                 location = Location.MAIN_SOUTH;
-                StoryPrinter.printStoryBlock("mainRoom.exploreSouth");
+                if (allCluesFound()) {
+                    StoryPrinter.printStoryBlock("mainRoom.exploreSouth.ready");
+                } else {
+                    StoryPrinter.printStoryBlock("mainRoom.exploreSouth");
+                }
                 break;
             case EAST:
                 location = Location.MAIN_EAST;
@@ -327,12 +335,12 @@ public class GameManager {
     public void enterCode(String code) {
 
         if (location != Location.MAIN_SOUTH) {
-            StoryPrinter.printStoryBlock("mainRoom.keypad.noKeypad");
+            StoryPrinter.printStoryBlock("mainRoom.key.noKeypad");
             return;
         }
 
         if (!allCluesFound()) {
-            StoryPrinter.printStoryBlock("mainRoom.keypad.notReady");
+            StoryPrinter.printStoryBlock("mainRoom.key.notReady");
             return;
         }
 
@@ -362,7 +370,7 @@ public class GameManager {
         };
 
         boolean allFound = Arrays.stream(clueRooms)
-                .allMatch(location -> roomBuilder.getRoom(location).isClueFound());
+                .allMatch(loc -> roomBuilder.getRoom(loc).isClueFound());
 
         return allFound;
     }

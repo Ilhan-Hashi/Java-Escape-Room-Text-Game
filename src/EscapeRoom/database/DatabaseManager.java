@@ -80,7 +80,6 @@ public class DatabaseManager {
             try {
                 connection.close();
                 connection = null;
-                System.out.println("Database connection closed.");
             } catch (SQLException ex) {
                 System.err.println("Database Error: Failed to close connection.");
                 ex.printStackTrace();
