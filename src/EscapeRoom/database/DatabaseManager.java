@@ -71,4 +71,20 @@ public class DatabaseManager {
         // Return the active database connection.
         return connection;
     }
+
+    /**
+     * Closes the database connection if it is open.
+     */
+    public void closeConnection() {
+        if (connection != null) {
+            try {
+                connection.close();
+                connection = null;
+                System.out.println("Database connection closed.");
+            } catch (SQLException ex) {
+                System.err.println("Database Error: Failed to close connection.");
+                ex.printStackTrace();
+            }
+        }
+    }
 }
