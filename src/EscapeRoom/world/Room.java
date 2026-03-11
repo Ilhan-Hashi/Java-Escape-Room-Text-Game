@@ -132,4 +132,19 @@ public class Room {
     }
 
     //endregion
+
+    //region Helper Methods
+
+    /**
+     * Checks if two Room objects are equal based on their location.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Room room = (Room) o;
+        return location == room.location;
+    }
+
+    //endregion
 }

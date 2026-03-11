@@ -10,6 +10,8 @@ import EscapeRoom.puzzles.CodePuzzle;
 import EscapeRoom.world.Room;
 import EscapeRoom.world.RoomBuilder;
 
+import java.util.Arrays;
+
 /**
  * The GameManager class controls the overall game flow and player interactions.
  * Manages the player's location, handles item actions,
@@ -49,9 +51,11 @@ public class GameManager {
      * Sets up room transitions for all rooms.
      */
     private void setupRoomTransitions() {
-        for (Room room : roomBuilder.getRooms()) {
-            room.setTransitionListener(destination -> location = destination);
-        }
+        roomBuilder.getRooms().forEach(
+                room -> room.setTransitionListener(
+                        destination -> location = destination
+                )
+        );
     }
 
     //endregion
@@ -63,11 +67,15 @@ public class GameManager {
      * @param direction the direction the player want to go.
      */
     public void goDirection(Direction direction) {
+        Room currentRoom = getCurrentRoom();
+        Room previousRoom = roomBuilder.getRoom(previousLocation);
 
-        if (isAlreadyAtLocation(direction)) {
+        if (currentRoom.equals(previousRoom) || isAlreadyAtLocation(direction)) {
             System.out.println("You are already standing there.");
             return;
         }
+
+        previousLocation = location;
 
         switch (direction) {
             case NORTH:
@@ -344,13 +352,10 @@ public class GameManager {
                 Location.NORTH_ROOM
         };
 
-        for (Location location : clueRooms) {
-            if (!roomBuilder.getRoom(location).isClueFound()) {
-                return false;
-            }
-        }
+        boolean allFound = Arrays.stream(clueRooms)
+                .allMatch(location -> roomBuilder.getRoom(location).isClueFound());
 
-        return true;
+        return allFound;
     }
 
     //endregion
