@@ -9,14 +9,16 @@ import EscapeRoom.world.Room;
  * @author Ilhan Hashi
  */
 public class Player {
+    //region Fields
+
     // Unique database ID for the player.
     private int id;
-
-    // Username chosen by the player
     private String userName;
-
-    // Player's inventory.
     private Inventory inventory;
+
+    //endregion
+
+    //region Constructor
 
     /**
      * Constructor used when loading player from database.
@@ -28,6 +30,10 @@ public class Player {
         this.userName = userName;
         this.inventory = new Inventory();
     }
+
+    //endregion
+
+    //region Getters
 
     /**
      * Returns the player's username.
@@ -45,4 +51,5 @@ public class Player {
         return inventory;
     }
 
+    //endregion
 }
