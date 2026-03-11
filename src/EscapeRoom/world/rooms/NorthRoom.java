@@ -29,6 +29,7 @@ public class NorthRoom extends Room {
     public NorthRoom() {
         super("North Room", Location.NORTH_ROOM, true);
         addItem(new Item("table", "A small wooden table with a locked drawer."));
+        addItem(new Item("lamp"));
     }
 
     //endregion
@@ -51,6 +52,12 @@ public class NorthRoom extends Room {
             return;
         }
 
+        if (itemName.equalsIgnoreCase("lamp")) {
+            System.out.println("An old lamp sits in the corner.");
+            System.out.println("It looks like it hasn't worked in years.");
+            return;
+        }
+
         System.out.println("You don't see anything like that here.");
     }
 
@@ -70,6 +77,11 @@ public class NorthRoom extends Room {
             return;
         }
 
+        if (itemName.equalsIgnoreCase("lamp")) {
+            System.out.println("The lamp is too fragile to move.");
+            return;
+        }
+
         System.out.println("You don't see that here.");
     }
 
@@ -86,6 +98,12 @@ public class NorthRoom extends Room {
 
         if (itemName.equalsIgnoreCase("key") || itemName.equalsIgnoreCase("brass key")) {
             useKey(player, flashlightOn);
+            return;
+        }
+
+        if (itemName.equalsIgnoreCase("lamp")) {
+            System.out.println("You flick the switch on the lamp.");
+            System.out.println("Nothing happens. It must be broken.");
             return;
         }
 
