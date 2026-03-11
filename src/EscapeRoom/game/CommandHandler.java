@@ -107,6 +107,9 @@ public class CommandHandler {
             case "?":
                 gameManager.showHelp();
                 break;
+            case "status":
+                gameManager.showStatus();
+                break;
             case "quit":
             case "exit":
                 gameManager.endGame();
