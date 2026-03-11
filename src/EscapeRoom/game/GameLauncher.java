@@ -82,6 +82,7 @@ public class GameLauncher {
             log.error("Game crashed", e);
             Logging.writeLog("Game crashed " + e);
         } finally {
+            DatabaseManager.getInstance().closeConnection();
             System.out.println("Thanks for playing. Goodbye!");
         }
     }
