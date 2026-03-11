@@ -26,13 +26,25 @@ public class RoomBuilder {
      */
     public RoomBuilder() {
         rooms = new HashMap<>();
-        buldRooms();
+        buildRooms();
     }
 
     //endregion
 
     //region Room Builder
-    private void buldRooms() {
+
+    /**
+     * Creates and registers all rooms in the game world.
+     */
+    private void buildRooms() {
+        rooms.put(Location.MAIN_CENTER, new MainRoom());
+        rooms.put(Location.MAIN_NORTH,  new WallRoom("North Wall", Location.MAIN_NORTH, Location.NORTH_ROOM, "north.enter.light", "north.enter.dark"));
+        rooms.put(Location.MAIN_EAST,   new WallRoom("East Wall",  Location.MAIN_EAST,  Location.EAST_ROOM,  "east.enter.light",  "east.enter.dark"));
+        rooms.put(Location.MAIN_WEST,   new WallRoom("West Wall",  Location.MAIN_WEST,  Location.WEST_ROOM,  "west.enter.light",  "west.enter.dark"));
+        rooms.put(Location.MAIN_SOUTH,  new SouthRoom("1257"));
+        rooms.put(Location.EAST_ROOM,   new EastRoom());
+        rooms.put(Location.WEST_ROOM,   new WestRoom());
+        rooms.put(Location.NORTH_ROOM,  new NorthRoom());
     }
 
     //endregion
