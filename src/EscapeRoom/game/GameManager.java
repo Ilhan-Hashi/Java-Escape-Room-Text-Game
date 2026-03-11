@@ -74,20 +74,26 @@ public class GameManager {
      * @param direction the direction the player want to go.
      */
     public void goDirection(Direction direction) {
+        // Check if the player is already at that location.
         if (isAlreadyAtLocation(direction)) {
             System.out.println("You are already standing there.");
             return;
         }
 
+        // Get the current room and the previous room.
         Room currentRoom = getCurrentRoom();
         Room previousRoom = previousLocation != null ? roomBuilder.getRoom(previousLocation) : null;
 
+        // Prevent moving to the same room again.
         if (previousRoom != null && currentRoom.equals(previousRoom)) {
             System.out.println("You are already standing there.");
             return;
         }
 
+        // Save the current location before moving.
         previousLocation = location;
+
+        // Change location based on direction.
         switch (direction) {
             case NORTH:
                 location = Location.MAIN_NORTH;
@@ -123,11 +129,13 @@ public class GameManager {
      * Handles taking an item.
      */
     public void takeItem(String itemName) {
+        // Special handling for the flashlight.
         if (itemName.equalsIgnoreCase("flashlight")) {
             handleFlashlightTake();
             return;
         }
 
+        // Let the current room handle the take action.
         getCurrentRoom().onTake(itemName, player, isFlashlightOn());
     }
 
@@ -135,11 +143,13 @@ public class GameManager {
      * Handles using an item.
      */
     public void useItem(String itemName) {
+        // Special handling for the flashlight.
         if (itemName.equalsIgnoreCase("flashlight")) {
             handleFlashlightUse();
             return;
         }
 
+        // Let the current room handle the use action.
         getCurrentRoom().onUse(itemName, player, isFlashlightOn());
     }
 
@@ -147,11 +157,13 @@ public class GameManager {
      * Handles examining an item.
      */
     public void examineItem(String itemName) {
+        // Special handling for the flashlight.
         if (itemName.equalsIgnoreCase("flashlight")) {
             handleFlashlightExamine();
             return;
         }
 
+        // Let the current room handle the examine action.
         getCurrentRoom().onExamine(itemName, player, isFlashlightOn());
     }
 
@@ -163,16 +175,19 @@ public class GameManager {
      * Handles taking the flashlight.
      */
     private void handleFlashlightTake() {
+        // Check if the player already has the flashlight.
         if (player.getInventory().hasItem("flashlight")) {
             StoryPrinter.printStoryBlock("mainRoom.flashlight.take.again");
             return;
         }
 
+        // Flashlight can only be taken in the center room.
         if (location != Location.MAIN_CENTER) {
             StoryPrinter.printStoryBlock("mainRoom.flashlight.take.away");
             return;
         }
 
+        // Create the flashlight item and add it to the player's inventory
         Item flashlight = new Tool("flashlight", "A small worn flashlight.");
         player.getInventory().addItem(flashlight);
         StoryPrinter.printStoryBlock("mainRoom.flashlight.take");
@@ -182,18 +197,22 @@ public class GameManager {
      * Handles using the flashlight.
      */
     private void handleFlashlightUse() {
-
+        // Get the flashlight from the player's inventory.
         Tool flashlight = (Tool) player.getInventory().getItem("flashlight");
 
+        // If the player does not have the flashlight.
         if (flashlight == null) {
             StoryPrinter.printStoryBlock("mainRoom.flashlight.use.noItem");
             return;
         }
 
+        // Toggle the flashlight on or off.
         flashlight.use(player);
 
+        // If it was turned off.
         if (!flashlight.isActive()) return;
 
+        // Show special messages depending on the room.
         if (location == Location.EAST_ROOM) {
             StoryPrinter.printStoryBlock("east.reveal.light");
         } else if (location == Location.NORTH_ROOM) {
@@ -209,7 +228,7 @@ public class GameManager {
      * Handles examining the flashlight.
      */
     private void handleFlashlightExamine() {
-
+        // If the player already has the flashlight.
         if (player.getInventory().hasItem("flashlight")) {
             StoryPrinter.printStoryBlock("mainRoom.flashlight.examine.after");
             return;
@@ -483,6 +502,7 @@ public class GameManager {
             Logging.writeLog("Player won: " + player);
             log.info("Player won: " + player);
         } else {
+            gameState = GameState.LOST;
             System.out.println("Thanks for playing.");
             Logging.writeLog("Player quit: " + player);
             log.info("Player quit: " + player);

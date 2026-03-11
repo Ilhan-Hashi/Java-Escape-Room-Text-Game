@@ -33,23 +33,27 @@ public class CommandHandler {
      * @param input the command entered by the player.
      */
     public void handleCommand(String input) {
-
+        // Ignore empty or null input.
         if (input == null || input.isBlank()) {
             return;
         }
 
+        // Split input into command and argument.
         try {
             String[] parts = input.trim().split("\\s+", 2);
             String command = parts[0].toLowerCase();
             String argument = parts.length > 1 ? parts[1].trim() : "";
 
+            // Check if the command is a direction.
             Direction direction = parseDirection(command);
 
+            // If it is a direction, move the player.
             if (direction != null) {
                 gameManager.goDirection(direction);
                 return;
             }
 
+            // Otherwise process other commands.
             processCommand(command, argument);
 
         } catch (InvalidCommandException ex) {
@@ -69,13 +73,17 @@ public class CommandHandler {
     private Direction parseDirection(String text) {
 
         switch (text.toLowerCase()) {
-
-            case "north": case "n": return Direction.NORTH;
-            case "south": case "s": return Direction.SOUTH;
-            case "east":  case "e": return Direction.EAST;
-            case "west":  case "w": return Direction.WEST;
-            case "center": case "c": return Direction.CENTER;
-
+            // Match the player input to a direction.
+            case "north": case "n":
+                return Direction.NORTH;
+            case "south": case "s":
+                return Direction.SOUTH;
+            case "east":  case "e":
+                return Direction.EAST;
+            case "west":  case "w":
+                return Direction.WEST;
+            case "center": case "c":
+                return Direction.CENTER;
             default: return null;
         }
     }
@@ -86,6 +94,7 @@ public class CommandHandler {
      * @param argument the argument associated with the command.
      */
     private void processCommand(String command, String argument) {
+        // Process player commands and call the correct game action.
         switch (command) {
             case "take":
                 if (!requiresArgument(argument, "Take what?")) return;
@@ -130,6 +139,7 @@ public class CommandHandler {
      * @return true if the argument is present.
      */
     private boolean requiresArgument(String argument, String prompt) {
+        // Checks if a command argument is provided.
         if (argument.isEmpty()) {
             System.out.println(prompt);
             return false;

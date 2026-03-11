@@ -1,7 +1,7 @@
 package EscapeRoom.enums;
 
 /**
- * The Direction enum represents the four directions
+ * The Direction enum represents the five directions
  * a player can move in the game.
  *
  * @author Ilhan Hashi

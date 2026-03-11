@@ -18,7 +18,7 @@ public class GameLauncher {
 
     //region Fields
 
-    // Logger for recording game events
+    // Logger for recording game events.
     final static Logger log = LogManager.getLogger("GameLogger");
 
     //endregion
@@ -39,6 +39,7 @@ public class GameLauncher {
             System.out.print("Enter your username: ");
             String username = scanner.nextLine().trim().toLowerCase();
 
+            // Check if username is empty.
             while (username.isEmpty()) {
                 System.out.println();
                 System.out.print("Username cannot be blank.");
@@ -112,6 +113,7 @@ public class GameLauncher {
     private static Player loadPlayer(String username) {
         Player player;
 
+        // Check if the username already exists in the database.
         if (!PlayerDatabase.usernameExists(username)) {
             int id = PlayerDatabase.insertPlayer(username);
             player = new Player(id, username);
@@ -121,6 +123,7 @@ public class GameLauncher {
             Logging.writeLog("New player created: " + player);
 
         } else {
+            // Load existing player.
             player = PlayerDatabase.getPlayer(username);
 
              StoryPrinter.printReturningPlayerWelcome(player.getUserName());
