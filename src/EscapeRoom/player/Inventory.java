@@ -82,9 +82,12 @@ public class Inventory {
         System.out.println();
         System.out.println("[ Inventory ]");
 
-        items.forEach(
-                item -> System.out.println("  - " + item.getName() + ": " + item.getDescription())
-        );
+        items.stream()
+                .sorted()
+                .forEach(
+                        item -> System.out.println("  - " + item.getName() + ": " + item.getDescription()
+                        )
+                );
 
         System.out.println();
     }

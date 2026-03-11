@@ -5,7 +5,7 @@ package EscapeRoom.items;
  *
  * @author Ilhan Hashi
  */
-public class Item {
+public class Item implements Comparable<Item> {
     //region Fields
 
     // Properties.
@@ -40,6 +40,15 @@ public class Item {
 
     public String getName() {return name;}
     public String getDescription() {return description;}
+
+    //endregion
+
+    //region Helper Methods
+
+    @Override
+    public int compareTo(Item o) {
+        return this.name.compareTo(o.name);
+    }
 
     //endregion
 }
