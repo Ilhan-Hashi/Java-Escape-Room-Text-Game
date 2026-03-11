@@ -3,9 +3,7 @@ package EscapeRoom.game;
 import EscapeRoom.enums.Direction;
 
 /**
- * The CommandHandler class is responsible
- * for parsing user input and calling the
- * appropriate GameManager methods.
+ * Handles player input and sends commands to the GameManager.
  *
  * @author Ilhan Hashi
  */
@@ -28,7 +26,36 @@ public class CommandHandler {
 
     //endregion
 
-    //region Direction Parser
+    //region Command Handling
+
+    /**
+     * Handles the command entered by the player.
+     * @param input the command entered by the player.
+     */
+    public void handleCommand(String input) {
+
+        if (input == null || input.isBlank()) {
+            return;
+        }
+
+        String[] parts = input.trim().split("\\s+", 2);
+
+        String command = parts[0].toLowerCase();
+        String argument = parts.length > 1 ? parts[1].trim() : "";
+
+        Direction direction = parseDirection(command);
+
+        if (direction != null) {
+            gameManager.goDirection(direction);
+            return;
+        }
+
+        processCommand(command, argument);
+    }
+
+    //endregion
+
+    //region Helper Methods
 
     /**
      * Converts text input into a Direction
@@ -47,6 +74,60 @@ public class CommandHandler {
 
             default: return null;
         }
+    }
+
+    /**
+     * Processes the player's command.
+     * @param command the command entered by the player.
+     * @param argument the argument associated with the command.
+     */
+    private void processCommand(String command, String argument) {
+        switch (command) {
+            case "take":
+                if (!requiresArgument(argument, "Take what?")) return;
+                gameManager.takeItem(argument);
+                break;
+            case "use":
+                if (!requiresArgument(argument, "Use what?")) return;
+                gameManager.useItem(argument);
+                break;
+            case "examine":
+                if (!requiresArgument(argument, "Examine what?")) return;
+                gameManager.examineItem(argument);
+                break;
+            case "inventory":
+            case "i":
+                gameManager.showInventory();
+                break;
+            case "enter":
+                if (!requiresArgument(argument, "Enter what?")) return;
+                gameManager.enterCode(argument);
+                break;
+            case "help":
+            case "?":
+                gameManager.showHelp();
+                break;
+            case "quit":
+            case "exit":
+                gameManager.endGame();
+                break;
+            default:
+                System.out.println("Unknown command. Type 'help' to see available commands.");
+        }
+    }
+
+    /**
+     * Checks if a command requires an argument.
+     * @param argument the argument entered by the player.
+     * @param prompt the message to display if missing.
+     * @return true if the argument is present.
+     */
+    private boolean requiresArgument(String argument, String prompt) {
+        if (argument.isEmpty()) {
+            System.out.println(prompt);
+            return false;
+        }
+        return true;
     }
 
     //endregion
