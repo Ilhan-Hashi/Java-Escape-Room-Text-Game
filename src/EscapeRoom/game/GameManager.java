@@ -10,6 +10,9 @@ import EscapeRoom.puzzles.CodePuzzle;
 import EscapeRoom.world.Room;
 import EscapeRoom.world.RoomBuilder;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 
 /**
@@ -28,6 +31,7 @@ public class GameManager {
     private Location location = Location.MAIN_CENTER;
     private final RoomBuilder roomBuilder = new RoomBuilder();
     private Location previousLocation = Location.MAIN_CENTER;
+    private final LocalDateTime startTime = LocalDateTime.now();
 
     //endregion
 
@@ -371,6 +375,64 @@ public class GameManager {
 
     //endregion
 
+    //region Time
+
+    /**
+     * Determines the current season based on the month.
+     */
+    private String getSeason() {
+        int month = LocalDate.now().getMonthValue();
+        switch (month) {
+            case 3, 4, 5:
+                return "spring";
+            case 6, 7, 8:
+                return "summer";
+            case 9, 10, 11:
+                return "fall";
+            default:
+                return "winter";
+        }
+    }
+
+    /**
+     * Displays the player current status.
+     */
+    public void showStatus() {
+        long minutes = getElapsedMinutes();
+        String season = getSeason();
+
+        System.out.println();
+        System.out.println("[ Status ]");
+        System.out.println("You have been trapped for " + minutes + " minutes.");
+
+        switch (season) {
+            case "spring":
+                System.out.println("The smell of rain lingers in the air...");
+                break;
+            case "summer":
+                System.out.println("The room grows uncomfortably warm...");
+                break;
+            case "fall":
+                System.out.println("A chill creeps in as the seasons turn...");
+                break;
+            case "winter":
+                System.out.println("A cold draft seeps through the walls...");
+                break;
+        }
+        System.out.println();
+    }
+
+    /**
+     * Calculates how many mins have passes sinse the game started.
+     */
+    private long getElapsedMinutes() {
+        long mins = ChronoUnit.MINUTES.between(startTime, LocalDateTime.now());
+
+        return mins;
+    }
+
+    //endregion
+
     //region Game Control
 
     /**
@@ -393,6 +455,7 @@ public class GameManager {
         System.out.println("Other:");
         System.out.println("  inventory / i");
         System.out.println("  enter <code>");
+        System.out.println("  status");
         System.out.println("  help / ?");
         System.out.println("  quit / exit");
         System.out.println();
