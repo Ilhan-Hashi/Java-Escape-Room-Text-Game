@@ -8,6 +8,8 @@ import EscapeRoom.world.Room;
 
 /**
  * The EastRoom class represents the east room containing the mirror clue.
+ *
+ * @author Ilhan Hashi
  */
 public class EastRoom extends Room {
     //region Fields
@@ -75,7 +77,7 @@ public class EastRoom extends Room {
     //endregion
 
 
-    //region Private Helpers
+    //region Helpers Methods
 
     /**
      * Examines the mirror in the east room.
@@ -126,6 +128,7 @@ public class EastRoom extends Room {
     /**
      * Checks if the clue in this room has been found.
      */
+    @Override
     public boolean isClueFound() {
         return clueFound;
     }

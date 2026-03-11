@@ -94,7 +94,7 @@ public class MainRoom extends Room {
 
     //endregion
 
-    //region Helpers
+    //region Helpers Methods
 
     /**
      * Examines the south door which is the main exit.

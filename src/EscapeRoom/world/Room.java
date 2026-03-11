@@ -8,9 +8,10 @@ import EscapeRoom.puzzles.Puzzle;
 import java.util.*;
 
 /**
- * The Room class represents a location in the game.
- * A room contains directional descriptions, exits,
- * items, and puzzles.
+ * Represents a room in the escape room game.
+ * A room can contain items and an optional puzzle.
+ * It handles examine, take, and use actions,
+ * and can trigger transitions to other rooms.
  *
  * @author Ilhan Hashi
  */
@@ -117,6 +118,17 @@ public class Room {
         if (transitionListener != null) {
             transitionListener.transition(destination);
         }
+    }
+
+    //endregion
+
+    //region Clue
+
+    /**
+     * Checks if the room has a clue that was found.
+     */
+    public boolean isClueFound() {
+        return false;
     }
 
     //endregion
