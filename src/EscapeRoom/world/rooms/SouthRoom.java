@@ -88,7 +88,7 @@ public class SouthRoom extends Room {
 
     //endregion
 
-    //region Private Helpers
+    //region Helpers Methods
 
     /**
      * Examines the keypad.
