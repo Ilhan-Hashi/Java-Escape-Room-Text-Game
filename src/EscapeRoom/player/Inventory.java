@@ -4,6 +4,7 @@ import EscapeRoom.items.Item;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Stores and manages the player's items.
@@ -39,20 +40,21 @@ public class Inventory {
      * Gets an item from the inventory.
      */
     public Item getItem(String itemName) {
-        for (Item item : items) {
-            if (item.getName().equalsIgnoreCase(itemName)) {
-                return item;
-            }
-        }
+        Optional<Item> found = items.stream()
+                .filter(item -> item.getName().equalsIgnoreCase(itemName))
+                .findFirst();
 
-        return null;
+        return found.orElse(null);
     }
 
     /**
      * Check if the inventory has a specefic item.
      */
     public boolean hasItem(String itemName) {
-        return getItem(itemName) != null;
+        boolean found = items.stream()
+                .anyMatch(item -> item.getName().equalsIgnoreCase(itemName));
+
+        return found;
     }
 
     /**
@@ -80,9 +82,9 @@ public class Inventory {
         System.out.println();
         System.out.println("[ Inventory ]");
 
-        for (Item item : items) {
-            System.out.println("  - " + item.getName() + ": " + item.getDescription());
-        }
+        items.forEach(
+                item -> System.out.println("  - " + item.getName() + ": " + item.getDescription())
+        );
 
         System.out.println();
     }
