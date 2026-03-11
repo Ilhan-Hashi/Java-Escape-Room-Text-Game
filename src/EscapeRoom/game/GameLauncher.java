@@ -40,6 +40,14 @@ public class GameLauncher {
             System.out.print("Enter your username: ");
             String username = scanner.nextLine().trim().toLowerCase();
 
+            while (username.isEmpty()) {
+                System.out.println();
+                System.out.print("Username cannot be blank.");
+                System.out.println();
+                System.out.print("Please enter your username: ");
+                username = scanner.nextLine().trim().toLowerCase();
+            }
+
             // Load or create player.
             Player player = loadPlayer(username);
 
@@ -71,6 +79,8 @@ public class GameLauncher {
             e.printStackTrace();
 
             log.error("Game crashed", e);
+        } finally {
+            System.out.println("Thanks for playing. Goodbye!");
         }
     }
 

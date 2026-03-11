@@ -38,19 +38,23 @@ public class CommandHandler {
             return;
         }
 
-        String[] parts = input.trim().split("\\s+", 2);
+        try {
+            String[] parts = input.trim().split("\\s+", 2);
+            String command = parts[0].toLowerCase();
+            String argument = parts.length > 1 ? parts[1].trim() : "";
 
-        String command = parts[0].toLowerCase();
-        String argument = parts.length > 1 ? parts[1].trim() : "";
+            Direction direction = parseDirection(command);
 
-        Direction direction = parseDirection(command);
+            if (direction != null) {
+                gameManager.goDirection(direction);
+                return;
+            }
 
-        if (direction != null) {
-            gameManager.goDirection(direction);
-            return;
+            processCommand(command, argument);
+
+        } catch (InvalidCommandException ex) {
+            System.out.println(ex.getMessage());
         }
-
-        processCommand(command, argument);
     }
 
     //endregion
@@ -115,7 +119,7 @@ public class CommandHandler {
                 gameManager.endGame();
                 break;
             default:
-                System.out.println("Unknown command. Type 'help' to see available commands.");
+                throw new InvalidCommandException(command);
         }
     }
 
