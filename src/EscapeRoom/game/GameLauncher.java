@@ -2,7 +2,6 @@ package EscapeRoom.game;
 import EscapeRoom.database.DatabaseManager;
 import EscapeRoom.database.PlayerDatabase;
 import EscapeRoom.player.Player;
-import EscapeRoom.world.Room;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -53,6 +52,8 @@ public class GameLauncher {
 
             // Create game manager.
             GameManager gameManager = new GameManager(player);
+            log.info("Game started: " + player);
+            Logging.writeLog("Game started: " + player);
 
             // Create command handler.
             CommandHandler commandHandler = new CommandHandler(gameManager);
@@ -79,6 +80,7 @@ public class GameLauncher {
             e.printStackTrace();
 
             log.error("Game crashed", e);
+            Logging.writeLog("Game crashed " + e);
         } finally {
             System.out.println("Thanks for playing. Goodbye!");
         }
@@ -95,7 +97,9 @@ public class GameLauncher {
     private static void initializeDatabase() {
         DatabaseManager.getInstance();
         PlayerDatabase.createPlayerTable();
+
         log.info("Database initialized.");
+        Logging.writeLog("Database initialized.");
     }
 
     /**
@@ -112,13 +116,15 @@ public class GameLauncher {
             player = new Player(id, username);
 
              StoryPrinter.printNewPlayerWelcome();
-            log.info("New player created: " + player);
+             log.info("New player created:  " + player);
+            Logging.writeLog("New player created: " + player);
 
         } else {
             player = PlayerDatabase.getPlayer(username);
 
              StoryPrinter.printReturningPlayerWelcome(player.getUserName());
-            log.info("Returning player logged in: " + player);
+             log.info("Returning player " + player);
+            Logging.writeLog("Returning player logged in: " + player);
         }
 
         return player;

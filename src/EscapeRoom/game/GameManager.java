@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 
+import static EscapeRoom.game.GameLauncher.log;
+
 /**
  * The GameManager class controls the overall game flow and player interactions.
  * Manages the player's location, handles item actions,
@@ -339,6 +341,8 @@ public class GameManager {
 
         if (puzzle.isSolved()) {
             gameState = GameState.WON;
+            Logging.writeLog("Puzzle solved by: " + player);
+            log.info("Puzzle solved by: " + player);
             endGame();
         }
     }
@@ -468,8 +472,12 @@ public class GameManager {
     public void endGame() {
         if (gameState == GameState.WON) {
             System.out.println("Thanks for playing. You escaped!");
+            Logging.writeLog("Player won: " + player);
+            log.info("Player won: " + player);
         } else {
             System.out.println("Thanks for playing.");
+            Logging.writeLog("Player quit: " + player);
+            log.info("Player quit: " + player);
         }
         System.exit(0);
     }
