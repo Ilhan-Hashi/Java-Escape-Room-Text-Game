@@ -7,6 +7,7 @@ import EscapeRoom.enums.Location;
  *
  * @author Ilhan Hashi
  */
+@FunctionalInterface
 public interface RoomTransition {
     /**
      * When the player transitions to a new room.
